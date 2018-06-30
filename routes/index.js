@@ -1,40 +1,37 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const nodemailer = require("nodemailer");
 
 /* GET home page */
-router.get('/', (req, res, next) => {
-  res.render('index');
+router.get("/", (req, res, next) => {
+  res.render("index");
 });
 
-
-
-router.post('/send-email', (req, res, next) => {
-  let {
-    email,
-    subject,
-    message
-  } = req.body;
+router.post("/send-email", (req, res, next) => {
+  let { email, subject, message } = req.body;
   let transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    service: "Gmail",
     auth: {
-      user: 'a.llerena001@gmail.com',
-      pass: 'vBnSOCroFngqAvRK22#INaNpJF02NYg3qO7I^*qzyYjbZPQW!5S#X1&QC6^3F0Ck'
+      user: "",
+      pass: ""
     }
   });
-  transporter.sendMail({
+  transporter
+    .sendMail({
       from: '"My Awesome Project 👻" <myawesome@project.com>',
       to: email,
       subject: subject,
       text: message,
       html: `<b>${message}</b>`
     })
-    .then(info => res.render('message', {
-      email,
-      subject,
-      message,
-      info
-    }))
+    .then(info =>
+      res.render("message", {
+        email,
+        subject,
+        message,
+        info
+      })
+    )
     .catch(error => console.log(error));
 });
 
